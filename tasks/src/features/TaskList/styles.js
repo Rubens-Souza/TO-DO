@@ -25,6 +25,6 @@ export const StyledTitleText = styled(StyeldText)`
 `;
 
 export const StyeldActualDateText = styled(StyeldText)`
-    font-size: 16px;
+    font-size: 24px;
     margin-bottom: 16px;
 `;

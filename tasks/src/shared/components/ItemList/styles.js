@@ -6,7 +6,7 @@ import Fonts from "../../utils/constants/Fonts";
 export const StyledText = styled.Text`
     font-family: ${Fonts.Lato};
     margin-left: 10px;
-    font-size: 13px;
+    font-size: 14px;
     color: ${Colors.gray};
 `;
 
@@ -22,7 +22,7 @@ export const StyledMainView = styled.View`
 export const StyledTaskTitle = styled(StyledText)`
     font-size: 20px;
     color: ${Colors.lightBlack};
-    margin-bottom: 5px;
+    margin-bottom: 4px;
     text-decoration: ${(props) => props.isCompleated ? "line-through" : "none" };
 `;
 
