@@ -1,1 +1,1 @@
-export const hasSetFunctionProperty = (value) => typeof(value) === "function";
+export const hasSetFunctionProperty = (value) => value && typeof(value) === "function";

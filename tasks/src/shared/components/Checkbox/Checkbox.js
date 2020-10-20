@@ -12,7 +12,7 @@ import {
 } from "./styles";
 
 const Checkbox = ({
-    value=false, onCheck=undefined, onUncheck=undefined
+    value=false, onCheck=null, onUncheck=null
 }) => {
 
     const [checked, setChecked] = useState(value);
