@@ -1,9 +1,9 @@
 const Colors = {
     white: "#ffffff",
-    lightBlack: "#262526",
+    lightBlack: "#636363",
     checkboxGreen: "#61c942",
     lightGray: "#cccccc",
-    gray: "#8e8e8e",
+    gray: "#8c8c8c",
 };
 
 export default Colors;
