@@ -1,10 +1,18 @@
 export const EmptyString = '';
 export const Space = ' ';
 
+export const isStringEmpty = (string) => {
+    return !string || string === EmptyString;
+};
+
+export const isStringBlank = (string) => {
+    return isStringEmpty(string) || string  === Space;
+};
+
 export const getDefaultIfEmpty = (string, defaultValue=EmptyString) => {
-    return (!string || string === EmptyString) ? defaultValue : string;
+    return isStringEmpty(string) ? defaultValue : string;
 };
 
 export const getDefaultIfBlank = (string, defaultValue=EmptyString) => {
-    return (!string || string === Space || string === EmptyString) ? defaultValue : string;
+    return isStringBlank(string) ? defaultValue : string;
 };
