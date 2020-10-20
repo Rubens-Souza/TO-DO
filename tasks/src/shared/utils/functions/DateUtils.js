@@ -8,3 +8,10 @@ export const getActualFormattedDate = () => {
     return moment().locale(DateLocale).format(DateFormat);
 };
 
+export const formatDate = (date) => {
+    if (!(date instanceof Date)) {
+        return undefined;
+    }
+
+    return moment(date).locale(DateLocale).format(DateFormat);
+};
