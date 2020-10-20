@@ -3,7 +3,7 @@ import styled from "styled-components/native";
 import Colors from "../../shared/utils/constants/Colors";
 import Fonts from "../../shared/utils/constants/Fonts";
 
-export const StyeldText = styled.Text`
+const StyeldText = styled.Text`
     color: ${Colors.white};
     font-family: ${Fonts.Lato};
 `;
@@ -25,6 +25,6 @@ export const StyledTitleText = styled(StyeldText)`
 `;
 
 export const StyeldActualDateText = styled(StyeldText)`
-    font-size: 20px;
+    font-size: 16px;
     margin-bottom: 16px;
 `;
