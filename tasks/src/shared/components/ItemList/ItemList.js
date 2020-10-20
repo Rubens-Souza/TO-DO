@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import If from "../If/If";
 import Checkbox from "../Checkbox/Checkbox";
@@ -10,31 +10,50 @@ import {
     StyledTaskTitle 
 } from "./styles";
 
+import { formatDate } from "../../../shared/utils/functions/DateUtils";
 import { EmptyString, isStringBlank } from "../../../shared/utils/functions/StringUtils";
 
 const ItemList = ({
     title=EmptyString, deadline=EmptyString, conclusionDate=EmptyString
 }) => {
 
+    const [isCompleated, setIsCompleated] = useState(false);
+
+    const getDateString = (date) => {
+        if (!(date instanceof Date)) {
+            return EmptyString;
+        }
+
+        return formatDate(date);
+    };
+
+    const compleatTask = () => {
+        setIsCompleated(true);
+    };
+
+    const resetTask = () => {
+        setIsCompleated(false);
+    };
+
     return (
         <StyledMainView>
-            <Checkbox/>
+            <Checkbox onCheck={compleatTask} onUncheck={resetTask}/>
 
             <StyledTextView>
-                <StyledTaskTitle>
+                <StyledTaskTitle isCompleated={isCompleated}>
                     {title}
                 </StyledTaskTitle>
 
                 <StyledDatesTextView>
-                    <If isTrue={!isStringBlank(deadline)}>
+                    <If isTrue={!isStringBlank(deadline) && !isCompleated}>
                         <StyledText>
-                            Deadline: {deadline}
+                            Deadline: {getDateString(deadline)}
                         </StyledText>
                     </If>
 
-                    <If isTrue={!isStringBlank(conclusionDate)}>
+                    <If isTrue={!isStringBlank(conclusionDate) && isCompleated}>
                         <StyledText>
-                            Conclusion: {conclusionDate}
+                            Concluded at: {getDateString(conclusionDate)}
                         </StyledText>
                     </If>
                 </StyledDatesTextView>

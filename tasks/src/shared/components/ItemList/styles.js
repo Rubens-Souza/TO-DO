@@ -23,6 +23,7 @@ export const StyledTaskTitle = styled(StyledText)`
     font-size: 20px;
     color: ${Colors.lightBlack};
     margin-bottom: 5px;
+    text-decoration: ${(props) => props.isCompleated ? "line-through" : "none" };
 `;
 
 export const StyledTextView = styled.View`
