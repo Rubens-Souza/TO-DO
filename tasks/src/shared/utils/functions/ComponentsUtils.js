@@ -1,0 +1,1 @@
+export const hasSetFunctionProperty = (value) => typeof(value) === "function";
