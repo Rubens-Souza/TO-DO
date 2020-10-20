@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View } from "react-native";
 
 import { getActualFormattedDate } from "../../shared/utils/functions/DateUtils";
@@ -15,6 +15,8 @@ import imgToday from "../../../assets/imgs/today.jpg";
 
 const TaskList = () => {
 
+    const [tasks] = useState(new Array(0));
+
     const actualDate = getActualFormattedDate();
 
     return (
@@ -29,6 +31,7 @@ const TaskList = () => {
                     </StyeldActualDateText>
                 </View>
             </StyeldImage>
+
             <ItemList title={"Capturar pokemons"} deadline={new Date("2020-02-20")} conclusionDate={new Date("2020-02-21")}/>
         </StyledSafeAreaView>
     );
