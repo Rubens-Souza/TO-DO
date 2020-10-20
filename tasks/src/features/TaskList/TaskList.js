@@ -29,7 +29,7 @@ const TaskList = () => {
                     </StyeldActualDateText>
                 </View>
             </StyeldImage>
-            <ItemList title={"Capturar pokemons"} deadline={"20/02/2020"} conclusionDate={"21/02/2020"}/>
+            <ItemList title={"Capturar pokemons"} deadline={new Date("2020-02-20")} conclusionDate={new Date("2020-02-21")}/>
         </StyledSafeAreaView>
     );
 };

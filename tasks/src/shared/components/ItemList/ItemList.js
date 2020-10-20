@@ -2,11 +2,11 @@ import React, { useState } from "react";
 
 import If from "../If/If";
 import Checkbox from "../Checkbox/Checkbox";
+
 import { 
     StyledText, 
     StyledMainView,
     StyledTextView,
-    StyledDatesTextView,
     StyledTaskTitle 
 } from "./styles";
 
@@ -44,19 +44,17 @@ const ItemList = ({
                     {title}
                 </StyledTaskTitle>
 
-                <StyledDatesTextView>
-                    <If isTrue={!isStringBlank(deadline) && !isCompleated}>
-                        <StyledText>
-                            Deadline: {getDateString(deadline)}
-                        </StyledText>
-                    </If>
+                <If isTrue={!isStringBlank(deadline) && !isCompleated}>
+                    <StyledText>
+                        Deadline: {getDateString(deadline)}
+                    </StyledText>
+                </If>
 
-                    <If isTrue={!isStringBlank(conclusionDate) && isCompleated}>
-                        <StyledText>
-                            Concluded at: {getDateString(conclusionDate)}
-                        </StyledText>
-                    </If>
-                </StyledDatesTextView>
+                <If isTrue={!isStringBlank(conclusionDate) && isCompleated}>
+                    <StyledText>
+                        Concluded at: {getDateString(conclusionDate)}
+                    </StyledText>
+                </If>
             </StyledTextView>
         </StyledMainView>
     );

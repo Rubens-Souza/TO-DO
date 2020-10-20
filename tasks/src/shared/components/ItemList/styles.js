@@ -30,7 +30,3 @@ export const StyledTextView = styled.View`
     min-width: 75%;
     max-width: 75%;
 `;
-
-export const StyledDatesTextView = styled.View`
-    flex-direction: row;
-`;
