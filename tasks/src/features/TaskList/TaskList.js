@@ -10,6 +10,7 @@ import {
     StyeldActualDateText 
 } from "./styles";
 
+import CreateTaskModal from "./CreateTaskModal/CreateTaskModal";
 import ItemList from "../../shared/components/ItemList/ItemList";
 import imgToday from "../../../assets/imgs/today.jpg";
 
@@ -18,11 +19,11 @@ import Task from "../../shared/dtos/Task";
 const TaskList = () => {
 
     const [tasks, setTasks] = useState(new Array(0));
+    const [modalCreateTaskIsOpen, setModalCreateTaskIsOpen] = useState(true);
     
     // TODO: Remove test stuff
     const [count, setCount] = useState(0);
     if (count === 0) {
-        console.log(1);
         setCount(1);
         tasks.push(new Task("Capturar Pokemons", new Date("2020-02-03"), new Date("2020-01-03")));
     }
@@ -61,8 +62,13 @@ const TaskList = () => {
         setTasks(updatedTasks);
     };
 
+    const handleOnClose = () => {
+        setModalCreateTaskIsOpen(false);
+    };
+
     return (
         <StyledSafeAreaView>
+            <CreateTaskModal isOpen={modalCreateTaskIsOpen} onClose={handleOnClose}/>
             <StyeldImage source={imgToday}>
                 <View>
                     <StyledTitleText>
