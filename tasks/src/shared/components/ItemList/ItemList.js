@@ -12,12 +12,17 @@ import {
 
 import { formatDate } from "../../../shared/utils/functions/DateUtils";
 import { EmptyString, isStringBlank } from "../../../shared/utils/functions/StringUtils";
+import { hasSetFunctionProperty } from "../../../shared/utils/functions/ComponentsUtils";
+
+import Task from "../../dtos/Task";
 
 const ItemList = ({
-    title=EmptyString, deadline=EmptyString, conclusionDate=EmptyString
+    taskData=Task.EmptyTask,
+    onTaskConclusion=null,
+    onTaskReseted=null
 }) => {
 
-    const [isCompleated, setIsCompleated] = useState(false);
+    const task = taskData;
 
     const getDateString = (date) => {
         if (!(date instanceof Date)) {
@@ -28,11 +33,15 @@ const ItemList = ({
     };
 
     const compleatTask = () => {
-        setIsCompleated(true);
+        if (hasSetFunctionProperty(onTaskConclusion)) {
+            onTaskConclusion(task.id);
+        }
     };
 
     const resetTask = () => {
-        setIsCompleated(false);
+        if (hasSetFunctionProperty(onTaskReseted)) {
+            onTaskReseted(task.id);
+        }
     };
 
     return (
@@ -40,19 +49,19 @@ const ItemList = ({
             <Checkbox onCheck={compleatTask} onUncheck={resetTask}/>
 
             <StyledTextView>
-                <StyledTaskTitle isCompleated={isCompleated}>
-                    {title}
+                <StyledTaskTitle isCompleated={task.concluded}>
+                    {task.title}
                 </StyledTaskTitle>
 
-                <If isTrue={!isStringBlank(deadline) && !isCompleated}>
+                <If isTrue={!isStringBlank(task.deadline) && !task.concluded}>
                     <StyledText>
-                        Deadline: {getDateString(deadline)}
+                        Deadline: {getDateString(task.deadline)}
                     </StyledText>
                 </If>
 
-                <If isTrue={!isStringBlank(conclusionDate) && isCompleated}>
+                <If isTrue={!isStringBlank(task.conclusion) && task.concluded}>
                     <StyledText>
-                        Concluded at: {getDateString(conclusionDate)}
+                        Concluded at: {getDateString(task.conclusion)}
                     </StyledText>
                 </If>
             </StyledTextView>

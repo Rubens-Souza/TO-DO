@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { View } from "react-native";
+import { View, FlatList } from "react-native";
 
-import { getActualFormattedDate } from "../../shared/utils/functions/DateUtils";
+import { getActualFormattedDate, getActualDate } from "../../shared/utils/functions/DateUtils";
 
 import { 
     StyeldImage, 
@@ -13,11 +13,53 @@ import {
 import ItemList from "../../shared/components/ItemList/ItemList";
 import imgToday from "../../../assets/imgs/today.jpg";
 
+import Task from "../../shared/dtos/Task";
+
 const TaskList = () => {
 
-    const [tasks] = useState(new Array(0));
+    const [tasks, setTasks] = useState(new Array(0));
+    
+    // TODO: Remove test stuff
+    const [count, setCount] = useState(0);
+    if (count === 0) {
+        console.log(1);
+        setCount(1);
+        tasks.push(new Task("Capturar Pokemons", new Date("2020-02-03"), new Date("2020-01-03")));
+    }
 
-    const actualDate = getActualFormattedDate();
+    const createItemList = (task) => {
+        if (!task) {
+            return null;
+        }
+
+        return (
+            <ItemList 
+                taskData={task}
+                onTaskConclusion={handleTaskConclusion}
+                onTaskReseted={handleTaskReseted}
+            />
+        );
+    };
+
+    const handleTaskConclusion = (id) => {
+        const updatedTasks = [...tasks];
+
+        let concludedTaskIndex = updatedTasks.findIndex(task => task.id === id);
+        updatedTasks[concludedTaskIndex].concluded = true;
+        updatedTasks[concludedTaskIndex].conclusion = getActualDate();
+
+        setTasks(updatedTasks);
+    };
+
+    const handleTaskReseted = (id) => {
+        const updatedTasks = [...tasks];
+
+        let resetedTaskIndex = updatedTasks.findIndex(task => task.id === id);
+        updatedTasks[resetedTaskIndex].concluded = false;
+        updatedTasks[resetedTaskIndex].conclusion = null;
+
+        setTasks(updatedTasks);
+    };
 
     return (
         <StyledSafeAreaView>
@@ -27,12 +69,19 @@ const TaskList = () => {
                         Today
                     </StyledTitleText>
                     <StyeldActualDateText>
-                        {actualDate}
+                        {getActualFormattedDate()}
                     </StyeldActualDateText>
                 </View>
             </StyeldImage>
 
-            <ItemList title={"Capturar pokemons"} deadline={new Date("2020-02-20")} conclusionDate={new Date("2020-02-21")}/>
+            <FlatList 
+                data={tasks}
+                extraData={tasks}
+                keyExtractor={task => task.id}
+                renderItem={({item: task}) => {
+                    return createItemList(task);
+                }}
+            />
         </StyledSafeAreaView>
     );
 };
