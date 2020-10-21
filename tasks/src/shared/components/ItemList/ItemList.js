@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import If from "../If/If";
 import Checkbox from "../Checkbox/Checkbox";
