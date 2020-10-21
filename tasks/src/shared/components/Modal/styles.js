@@ -25,21 +25,22 @@ export const StyledModalOverlayBackground = styled.View`
 
 export const StyledModalContentView = styled.View`
     background-color: ${Colors.white};
-    min-width: 84%;
-    min-height: 51%;
+    min-width: 90%;
+    min-height: 160px;
     border-radius: 4px;
 `;
 
 export const StyledTitle = styled.Text`
-    color: white;
+    color: ${Colors.white};
     background-color: ${(props) => props.color};
     text-align: center;
-    font-size: 18px;
+    font-size: 21px;
     padding: 9px 9px;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
 `;
 
 export const StyledContent = styled.View`
+    flex: 1;
     margin: 9px 9px;
 `;
