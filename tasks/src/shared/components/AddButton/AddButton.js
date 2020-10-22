@@ -11,7 +11,7 @@ const AddButton = ({
     onPress=null, themeColor=Colors.darkRed
 }) => {
     return (
-        <StyledButton onPress={onPress} color={themeColor}>
+        <StyledButton activeOpacity={0.7} onPress={onPress} color={themeColor}>
             <StyledText>+</StyledText>
         </StyledButton>
     );

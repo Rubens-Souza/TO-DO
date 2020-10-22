@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import Modal from "../../shared/components/Modal";
+import Modal from "../../shared/components/Modal/Modal";
 import Colors from "../../shared/utils/constants/Colors";
 import { EmptyString } from "../../shared/utils/functions/StringUtils";
 
