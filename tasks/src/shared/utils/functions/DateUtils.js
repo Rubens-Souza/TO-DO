@@ -4,6 +4,10 @@ import "moment/locale/en-ca";
 export const DateLocale = "en-ca";
 export const DateFormat = "ddd, MM/D/YYYY";
 
+export const isDateValid = (date) => {
+    return (date && (date instanceof Date) && !isNaN(date.valueOf()));
+};
+
 export const getActualDate = () => {
     return new Date();
 };
