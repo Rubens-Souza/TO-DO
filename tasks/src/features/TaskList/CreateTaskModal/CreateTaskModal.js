@@ -16,11 +16,10 @@ const IntialState = {
 };
 
 const CreateTaskModal = ({
-    isOpen=true, onClose=null
+    isOpen=true, onClose=null, themeColor=Colors.darkRed
 }) => {
 
-    const [taskName, setTaskName] = useState(EmptyString);
-    const DefaultThemeColor = Colors.darkRed;
+    const [taskName, setTaskName] = useState(IntialState.taskName);
 
     const handleChangeTaskName = (text) => {
         setTaskName(text);
@@ -30,7 +29,7 @@ const CreateTaskModal = ({
         <Modal 
             title={"Create Task"} 
             isOpen={isOpen}
-            themeColor={DefaultThemeColor}
+            themeColor={themeColor}
             onClose={onClose}>
 
                 <StyledTextInput
@@ -42,13 +41,13 @@ const CreateTaskModal = ({
                 <StyledButtonsView>
                     <StyledButtons onPress={onClose}>
                         <StyledText 
-                            color={DefaultThemeColor}>
+                            color={themeColor}>
                             Cancel
                         </StyledText>
                     </StyledButtons>
 
                     <StyledButtons>
-                        <StyledText color={DefaultThemeColor}>
+                        <StyledText color={themeColor}>
                             Save
                         </StyledText>
                     </StyledButtons>
