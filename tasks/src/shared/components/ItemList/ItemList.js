@@ -2,6 +2,8 @@ import React from "react";
 
 import If from "../If/If";
 import Checkbox from "../Checkbox/Checkbox";
+import ExclusionButton from "./ExclusionButton/ExclusionButton";
+import Swipeable from "react-native-gesture-handler/Swipeable";
 
 import { 
     StyledText, 
@@ -44,28 +46,36 @@ const ItemList = ({
         }
     };
 
+    const getExclusionButton = () => {
+        return (
+            <ExclusionButton/>
+        );
+    };
+
     return (
-        <StyledMainView>
-            <Checkbox onCheck={compleatTask} onUncheck={resetTask}/>
+        <Swipeable renderRightActions={getExclusionButton}>
+            <StyledMainView>
+                <Checkbox onCheck={compleatTask} onUncheck={resetTask}/>
 
-            <StyledTextView>
-                <StyledTaskTitle isCompleated={task.concluded}>
-                    {task.title}
-                </StyledTaskTitle>
+                <StyledTextView>
+                    <StyledTaskTitle isCompleated={task.concluded}>
+                        {task.title}
+                    </StyledTaskTitle>
 
-                <If isTrue={!isStringBlank(task.deadline) && !task.concluded}>
-                    <StyledText>
-                        Deadline: {getDateString(task.deadline)}
-                    </StyledText>
-                </If>
+                    <If isTrue={!isStringBlank(task.deadline) && !task.concluded}>
+                        <StyledText>
+                            Deadline: {getDateString(task.deadline)}
+                        </StyledText>
+                    </If>
 
-                <If isTrue={!isStringBlank(task.conclusion) && task.concluded}>
-                    <StyledText>
-                        Concluded at: {getDateString(task.conclusion)}
-                    </StyledText>
-                </If>
-            </StyledTextView>
-        </StyledMainView>
+                    <If isTrue={!isStringBlank(task.conclusion) && task.concluded}>
+                        <StyledText>
+                            Concluded at: {getDateString(task.conclusion)}
+                        </StyledText>
+                    </If>
+                </StyledTextView>
+            </StyledMainView>
+        </Swipeable>
     );
 };
 
