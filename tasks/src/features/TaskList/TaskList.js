@@ -20,7 +20,7 @@ import Task from "../../shared/dtos/Task";
 const TaskList = () => {
 
     const [tasks, setTasks] = useState(new Array(0));
-    const [modalCreateTaskIsOpen, setModalCreateTaskIsOpen] = useState(true);
+    const [modalCreateTaskIsOpen, setModalCreateTaskIsOpen] = useState(false);
     
     // TODO: Remove test stuff
     const [count, setCount] = useState(0);
@@ -71,9 +71,23 @@ const TaskList = () => {
         setModalCreateTaskIsOpen(true);
     };
 
+    const handleCreateTaskSave = (createdTask) => {
+        setModalCreateTaskIsOpen(false);
+
+        const updatedTasks = [...tasks];
+        updatedTasks.push(createdTask);
+        
+        setTasks(updatedTasks);
+    };
+
     return (
         <StyledSafeAreaView>
-            <CreateTaskModal isOpen={modalCreateTaskIsOpen} onClose={closeCreateTaskModal}/>
+            <CreateTaskModal 
+                isOpen={modalCreateTaskIsOpen} 
+                onClose={closeCreateTaskModal}
+                onSave={handleCreateTaskSave}
+            />
+
             <StyeldImage source={imgToday}>
                 <View>
                     <StyledTitleText>

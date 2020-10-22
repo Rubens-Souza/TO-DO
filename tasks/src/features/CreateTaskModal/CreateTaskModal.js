@@ -14,6 +14,9 @@ import Colors from "../../shared/utils/constants/Colors";
 import DateTimePickerModes from "../../shared/utils/constants/DateTimePickerModes";
 import { getActualDate } from "../../shared/utils/functions/DateUtils";
 import { EmptyString } from "../../shared/utils/functions/StringUtils";
+import { hasSetFunctionProperty } from "../../shared/utils/functions/ComponentsUtils";
+
+import Task from "../../shared/dtos/Task";
 
 const IntialState = {
     taskName: EmptyString,
@@ -22,7 +25,10 @@ const IntialState = {
 };
 
 const CreateTaskModal = ({
-    isOpen=true, onClose=null, themeColor=Colors.darkRed
+    isOpen=true, 
+    onClose=null, 
+    onSave=null,
+    themeColor=Colors.darkRed
 }) => {
 
     const [taskName, setTaskName] = useState(IntialState.taskName);
@@ -33,9 +39,23 @@ const CreateTaskModal = ({
     };
 
     const handleDeadlineDateInput = (evt, date) => {
-        console.log("top top");
+        setTaskDeadLineDate(date);
+    };
+
+    const handleSave = () => {
+        let createdTask = new Task(taskName, taskDeadlineDate);
+        resetToOriginalState();
+
+        if (hasSetFunctionProperty(onSave)) {
+            onSave(createdTask);
+        }
     };
     
+    const resetToOriginalState = () => {
+        setTaskName(IntialState.taskName);
+        setTaskDeadLineDate(IntialState.intialDate);
+    };
+
     return (
         <Modal 
             title={"Create Task"} 
@@ -62,7 +82,7 @@ const CreateTaskModal = ({
                         </StyledText>
                     </StyledButtons>
 
-                    <StyledButtons>
+                    <StyledButtons onPress={handleSave}>
                         <StyledText color={themeColor}>
                             Save
                         </StyledText>
