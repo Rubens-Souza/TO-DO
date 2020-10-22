@@ -1,12 +1,16 @@
 export const EmptyString = '';
 export const Space = ' ';
 
+export const parseString = (object) => {
+    return String(object);
+};
+
 export const isStringEmpty = (string) => {
     return !string || string === EmptyString;
 };
 
 export const isStringBlank = (string) => {
-    return isStringEmpty(string) || string  === Space;
+    return !string || isStringEmpty(parseString(string).trim());
 };
 
 export const getDefaultIfEmpty = (string, defaultValue=EmptyString) => {
