@@ -41,6 +41,5 @@ export const StyledTitle = styled.Text`
 `;
 
 export const StyledContent = styled.View`
-    flex: 1;
     margin: 9px 9px;
 `;
