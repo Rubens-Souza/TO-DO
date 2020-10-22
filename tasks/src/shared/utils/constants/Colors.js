@@ -1,5 +1,5 @@
 const Colors = {
-    white: "#ffffff",
+    white: "#fefefe",
     lightBlack: "#636363",
     black: "#1d1d1d",
     checkboxGreen: "#61c942",
