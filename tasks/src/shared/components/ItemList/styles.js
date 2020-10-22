@@ -17,6 +17,7 @@ export const StyledMainView = styled.View`
     padding: 8px 8px;
     border-bottom-color: ${Colors.lightGray};
     border-bottom-width: 1px;
+    background-color: ${Colors.white};
 `;
 
 export const StyledTaskTitle = styled(StyledText)`

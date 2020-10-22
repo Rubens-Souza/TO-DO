@@ -10,7 +10,7 @@ position: relative;
     justify-content: space-evenly;
     align-items: center;
     padding: 3px 3px;
-    width: ${(props) => props.direction === ExclusionButtonDirections.horizontal ? "100px" : "75px" };
+    width: ${(props) => props.direction === ExclusionButtonDirections.horizontal ? "100%" : "75px" };
 `;
 
 export const StyledButtonText = styled.Text`
