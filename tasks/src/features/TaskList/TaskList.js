@@ -39,6 +39,7 @@ const TaskList = () => {
                 taskData={task}
                 onTaskConclusion={handleTaskConclusion}
                 onTaskReseted={handleTaskReseted}
+                onExclusion={handleTaskExclusion}
             />
         );
     };
@@ -59,6 +60,15 @@ const TaskList = () => {
         let resetedTaskIndex = updatedTasks.findIndex(task => task.id === id);
         updatedTasks[resetedTaskIndex].concluded = false;
         updatedTasks[resetedTaskIndex].conclusion = null;
+
+        setTasks(updatedTasks);
+    };
+
+    const handleTaskExclusion = (id) => {
+        const updatedTasks = [...tasks];
+
+        const deletedTaskIndex = updatedTasks.findIndex(task => task.id === id);
+        updatedTasks.splice(deletedTaskIndex, 1);
 
         setTasks(updatedTasks);
     };

@@ -15,13 +15,15 @@ import {
 import { formatDate } from "../../../shared/utils/functions/DateUtils";
 import { EmptyString, isStringBlank } from "../../../shared/utils/functions/StringUtils";
 import { hasSetFunctionProperty } from "../../../shared/utils/functions/ComponentsUtils";
+import ExclusionButtonDirections from "../../../shared/utils/constants/ExclusionButtonDirections";
 
 import Task from "../../dtos/Task";
 
 const ItemList = ({
     taskData=Task.EmptyTask,
     onTaskConclusion=null,
-    onTaskReseted=null
+    onTaskReseted=null,
+    onExclusion=null
 }) => {
 
     const task = taskData;
@@ -46,14 +48,31 @@ const ItemList = ({
         }
     };
 
-    const getExclusionButton = () => {
+    const getRightExclusionButton = () => {
         return (
-            <ExclusionButton/>
+            <ExclusionButton onPress={handleExclusion}/>
         );
     };
 
+    const getLeftExclusionButton = () => {
+        return (
+            <ExclusionButton direction={ExclusionButtonDirections.horizontal}/>
+        );
+    };
+
+    const handleExclusion = () => {
+        if (hasSetFunctionProperty(onExclusion)) {
+            onExclusion(task.id);
+        }
+    };
+
     return (
-        <Swipeable renderRightActions={getExclusionButton}>
+        <Swipeable 
+            renderRightActions={getRightExclusionButton} 
+            renderLeftActions={getLeftExclusionButton}
+            onSwipeableLeftOpen={handleExclusion}
+            >
+
             <StyledMainView>
                 <Checkbox onCheck={compleatTask} onUncheck={resetTask}/>
 
