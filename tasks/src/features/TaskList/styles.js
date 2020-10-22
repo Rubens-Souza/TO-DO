@@ -11,7 +11,6 @@ const StyeldText = styled.Text`
 export const StyeldImage = styled.ImageBackground`
     width: 100%;
     height: 32%;
-    justify-content: flex-end;
     padding: 12px 16px;
 `;
 
@@ -21,10 +20,18 @@ export const StyledSafeAreaView = styled.SafeAreaView`
 
 export const StyledTitleText = styled(StyeldText)`
     font-size: 48px;
+    margin-top: 27px;
     margin-bottom: 12px;
 `;
 
-export const StyeldActualDateText = styled(StyeldText)`
+export const StyledActualDateText = styled(StyeldText)`
     font-size: 24px;
     margin-bottom: 16px;
+`;
+
+export const StyledIconBar = styled.View`
+    flex-direction: row;
+    justify-content: flex-end;
+    padding: 3px 3px;
+    width: 100%;
 `;

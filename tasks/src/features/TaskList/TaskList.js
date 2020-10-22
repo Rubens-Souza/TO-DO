@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import { View, FlatList } from "react-native";
 
-import { getActualFormattedDate, getActualDate } from "../../shared/utils/functions/DateUtils";
+import VisibilityButton from "./VisibilityButton/VisibilityButton";
+import CreateTaskModal from "../CreateTaskModal/CreateTaskModal";
+import AddButton from "../../shared/components/AddButton/AddButton";
+import ItemList from "../../shared/components/ItemList/ItemList";
+import imgToday from "../../../assets/imgs/today.jpg";
 
 import { 
     StyeldImage, 
     StyledSafeAreaView, 
     StyledTitleText, 
-    StyeldActualDateText 
+    StyledActualDateText, 
+    StyledIconBar 
 } from "./styles";
 
-import CreateTaskModal from "../CreateTaskModal/CreateTaskModal";
-import AddButton from "../../shared/components/AddButton/AddButton";
-import ItemList from "../../shared/components/ItemList/ItemList";
-import imgToday from "../../../assets/imgs/today.jpg";
+import { getActualFormattedDate, getActualDate } from "../../shared/utils/functions/DateUtils";
 
 import Task from "../../shared/dtos/Task";
 
@@ -21,12 +23,15 @@ const TaskList = () => {
 
     const [tasks, setTasks] = useState(new Array(0));
     const [modalCreateTaskIsOpen, setModalCreateTaskIsOpen] = useState(false);
+    const [concludedTasksIsVisible, setConcludedTasksIsVisible] = useState(true);
     
     // TODO: Remove test stuff
     const [count, setCount] = useState(0);
     if (count === 0) {
         setCount(1);
-        tasks.push(new Task("Capturar Pokemons", new Date("2020-02-03"), new Date("2020-01-03")));
+        tasks.push(new Task("Capturar Pokemons1", new Date("2020-02-03"), new Date("2020-01-03")));
+        tasks.push(new Task("Capturar Pokemons2", new Date("2020-02-03"), new Date("2020-01-03")));
+        tasks.push(new Task("Capturar Pokemons3", new Date("2020-02-03"), new Date("2020-01-03")));
     }
 
     const createItemList = (task) => {
@@ -90,6 +95,10 @@ const TaskList = () => {
         setTasks(updatedTasks);
     };
 
+    const handleVisibilityChange = () => {
+        setConcludedTasksIsVisible(!concludedTasksIsVisible);
+    };
+
     return (
         <StyledSafeAreaView>
             <CreateTaskModal 
@@ -99,14 +108,18 @@ const TaskList = () => {
             />
 
             <StyeldImage source={imgToday}>
-                <View>
-                    <StyledTitleText>
-                        Today
-                    </StyledTitleText>
-                    <StyeldActualDateText>
-                        {getActualFormattedDate()}
-                    </StyeldActualDateText>
-                </View>
+                <StyledIconBar>
+                    <VisibilityButton 
+                        isVisible={concludedTasksIsVisible} 
+                        onPress={handleVisibilityChange}
+                    />
+                </StyledIconBar>
+                <StyledTitleText>
+                    Today
+                </StyledTitleText>
+                <StyledActualDateText>
+                    {getActualFormattedDate()}
+                </StyledActualDateText>
             </StyeldImage>
 
             <FlatList 
