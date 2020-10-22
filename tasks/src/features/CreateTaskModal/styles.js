@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 
-import Colors from "../../../shared/utils/constants/Colors";
+import Colors from "../../shared/utils/constants/Colors";
 
 export const StyledText = styled.Text`
     font-size: 15px;

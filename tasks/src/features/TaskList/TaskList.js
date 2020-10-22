@@ -10,7 +10,8 @@ import {
     StyeldActualDateText 
 } from "./styles";
 
-import CreateTaskModal from "./CreateTaskModal/CreateTaskModal";
+import CreateTaskModal from "../CreateTaskModal/CreateTaskModal";
+import AddButton from "../../shared/components/AddButton/AddButton";
 import ItemList from "../../shared/components/ItemList/ItemList";
 import imgToday from "../../../assets/imgs/today.jpg";
 
@@ -62,13 +63,17 @@ const TaskList = () => {
         setTasks(updatedTasks);
     };
 
-    const handleOnClose = () => {
+    const closeCreateTaskModal = () => {
         setModalCreateTaskIsOpen(false);
+    };
+
+    const openCreateTaskModal = () => {
+        setModalCreateTaskIsOpen(true);
     };
 
     return (
         <StyledSafeAreaView>
-            <CreateTaskModal isOpen={modalCreateTaskIsOpen} onClose={handleOnClose}/>
+            <CreateTaskModal isOpen={modalCreateTaskIsOpen} onClose={closeCreateTaskModal}/>
             <StyeldImage source={imgToday}>
                 <View>
                     <StyledTitleText>
@@ -88,6 +93,8 @@ const TaskList = () => {
                     return createItemList(task);
                 }}
             />
+
+            <AddButton onPress={openCreateTaskModal}/>
         </StyledSafeAreaView>
     );
 };
