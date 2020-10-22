@@ -13,7 +13,7 @@ import {
 import Colors from "../../shared/utils/constants/Colors";
 import DateTimePickerModes from "../../shared/utils/constants/DateTimePickerModes";
 import { getActualDate } from "../../shared/utils/functions/DateUtils";
-import { EmptyString } from "../../shared/utils/functions/StringUtils";
+import { EmptyString, isStringBlank } from "../../shared/utils/functions/StringUtils";
 import { hasSetFunctionProperty } from "../../shared/utils/functions/ComponentsUtils";
 
 import Task from "../../shared/dtos/Task";
@@ -76,14 +76,13 @@ const CreateTaskModal = ({
 
                 <StyledButtonsView>
                     <StyledButtons onPress={onClose}>
-                        <StyledText 
-                            color={themeColor}>
+                        <StyledText color={themeColor} disabled={false}>
                             Cancel
                         </StyledText>
                     </StyledButtons>
 
-                    <StyledButtons onPress={handleSave}>
-                        <StyledText color={themeColor}>
+                    <StyledButtons onPress={handleSave} disabled={isStringBlank(taskName)}>
+                        <StyledText color={themeColor} disabled={isStringBlank(taskName)}>
                             Save
                         </StyledText>
                     </StyledButtons>

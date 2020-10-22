@@ -1,9 +1,11 @@
 import styled from "styled-components/native";
 import { StyledCommumTextInput } from "../../shared/CommumStyles/CommumStyles";
 
+import Colors from "../../shared/utils/constants/Colors";
+
 export const StyledText = styled.Text`
     font-size: 15px;
-    color: ${(props) => props.color};
+    color: ${(props) => props.disabled ? Colors.lightGray :  props.color};
 `;
 
 export const StyledTextInput = styled(StyledCommumTextInput)`
