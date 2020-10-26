@@ -15,27 +15,27 @@ import {
     StyledIconBar 
 } from "./styles";
 
+import AsyncStorage from "@react-native-community/async-storage";
+
 import { getActualFormattedDate, getActualDate } from "../../shared/utils/functions/DateUtils";
 
-import Task from "../../shared/dtos/Task";
+const TaskListInitialState = {
+    tasks: new Array(0),
+    displayTasks: new Array(0),
+    modalCreateTaskIsOpen: false,
+    concludedTasksIsVisible: true,
+};
 
 const TaskList = () => {
 
-    const [tasks, setTasks] = useState(new Array(0));
-    const [displayTasks, setDisplayTasks] = useState(new Array(0));
-    const [modalCreateTaskIsOpen, setModalCreateTaskIsOpen] = useState(false);
-    const [concludedTasksIsVisible, setConcludedTasksIsVisible] = useState(true);
-    
-    // TODO: Remove test stuff
-    const [count, setCount] = useState(0);
-    if (count === 0) {
-        setCount(1);
-        tasks.push(new Task("Capturar Pokemons1", new Date("2020-02-03"), new Date("2020-01-03")));
-        tasks.push(new Task("Capturar Pokemons4", new Date("2020-02-03"), new Date("2020-01-03"), true));
-        tasks.push(new Task("Capturar Pokemons2", new Date("2020-02-03"), new Date("2020-01-03")));
-        tasks.push(new Task("Capturar Pokemons3", new Date("2020-02-03"), new Date("2020-01-03")));
-    }
+    const [tasks, setTasks] = useState(TaskListInitialState.tasks);
+    const [displayTasks, setDisplayTasks] = useState(TaskListInitialState.displayTasks);
+    const [modalCreateTaskIsOpen, setModalCreateTaskIsOpen] = useState(TaskListInitialState.modalCreateTaskIsOpen);
+    const [concludedTasksIsVisible, setConcludedTasksIsVisible] = useState(TaskListInitialState.concludedTasksIsVisible);
+    const [isLoading, setIsLoading] = useState(true);
 
+    const State_Storaged_Item_Name = "TaskListState";
+    
     const createItemList = (task) => {
         if (!task) {
             return null;
@@ -101,6 +101,27 @@ const TaskList = () => {
         setConcludedTasksIsVisible(!concludedTasksIsVisible);
     };
 
+    const handleAnyTaskListChange = () => {
+        updateDisplayTasks();
+        saveActualState();
+    };
+
+    const handleTaskListInitialLoad = () => {
+        loadLastState()
+            .catch(() => {
+                resetToDefaultState();
+            });
+    };
+
+    const updateDisplayTasks = () => {
+        let taskList = [... tasks];
+        
+        taskList = filterConcludedTasks(taskList);
+        taskList = sortConcludedTask(taskList);
+
+        setDisplayTasks(taskList);
+    };
+
     const sortConcludedTask = (taskList) => {
         let ordenatedTasks = [... taskList];
 
@@ -123,18 +144,52 @@ const TaskList = () => {
         return filteredTasks;
     };
 
-    const prepareDisplayTaskList = () => {
-        let taskList = [... tasks];
+    const saveActualState = () => {
+        if (isLoading) {
+            return;
+        }
 
-        taskList = sortConcludedTask(taskList);
-        taskList = filterConcludedTasks(taskList);
+        const actualState = {
+            tasks: tasks,
+            displayTasks: displayTasks,
+            modalCreateTaskIsOpen: modalCreateTaskIsOpen,
+            concludedTasksIsVisible: concludedTasksIsVisible
+        };
 
-        setDisplayTasks(taskList);
-    }
+        AsyncStorage.setItem(State_Storaged_Item_Name, JSON.stringify(actualState));
+    };
 
-    useMemo(prepareDisplayTaskList, []);
-    useMemo(prepareDisplayTaskList, [tasks]);
-    useMemo(prepareDisplayTaskList, [concludedTasksIsVisible]);
+    const loadLastState = async () => {
+        let lastState = await AsyncStorage.getItem(State_Storaged_Item_Name);
+        lastState = JSON.parse(lastState);
+
+        configStateTo(lastState);
+        setIsLoading(false);
+    };
+
+    const configStateTo = (state) => {
+        if (!state) {
+            resetToDefaultState();
+        }
+
+        setTasks(state.tasks);
+        setModalCreateTaskIsOpen(state.modalCreateTaskIsOpen);
+        setConcludedTasksIsVisible(state.concludedTasksIsVisible);
+        setDisplayTasks(state.displayTasks);
+    };
+
+    const resetToDefaultState = () => {
+        setTasks(TaskListInitialState.tasks);
+        setModalCreateTaskIsOpen(TaskListInitialState.modalCreateTaskIsOpen);
+        setConcludedTasksIsVisible(TaskListInitialState.concludedTasksIsVisible);
+        setDisplayTasks(TaskListInitialState.displayTasks);
+        setIsLoading(false);
+    };
+
+    useMemo(handleTaskListInitialLoad, []);
+    useMemo(handleAnyTaskListChange, [tasks]);
+    useMemo(handleAnyTaskListChange, [concludedTasksIsVisible]);
+    useMemo(updateDisplayTasks, [isLoading]);
 
     return (
         <StyledSafeAreaView>
