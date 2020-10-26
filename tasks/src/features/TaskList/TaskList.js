@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, FlatList } from "react-native";
+import React, { useState, useMemo } from "react";
+import { FlatList } from "react-native";
 
 import VisibilityButton from "./VisibilityButton/VisibilityButton";
 import CreateTaskModal from "../CreateTaskModal/CreateTaskModal";
@@ -22,6 +22,7 @@ import Task from "../../shared/dtos/Task";
 const TaskList = () => {
 
     const [tasks, setTasks] = useState(new Array(0));
+    const [displayTasks, setDisplayTasks] = useState(new Array(0));
     const [modalCreateTaskIsOpen, setModalCreateTaskIsOpen] = useState(false);
     const [concludedTasksIsVisible, setConcludedTasksIsVisible] = useState(true);
     
@@ -30,6 +31,7 @@ const TaskList = () => {
     if (count === 0) {
         setCount(1);
         tasks.push(new Task("Capturar Pokemons1", new Date("2020-02-03"), new Date("2020-01-03")));
+        tasks.push(new Task("Capturar Pokemons4", new Date("2020-02-03"), new Date("2020-01-03"), true));
         tasks.push(new Task("Capturar Pokemons2", new Date("2020-02-03"), new Date("2020-01-03")));
         tasks.push(new Task("Capturar Pokemons3", new Date("2020-02-03"), new Date("2020-01-03")));
     }
@@ -90,7 +92,7 @@ const TaskList = () => {
         setModalCreateTaskIsOpen(false);
 
         const updatedTasks = [...tasks];
-        updatedTasks.push(createdTask);
+        updatedTasks.unshift(createdTask);
         
         setTasks(updatedTasks);
     };
@@ -98,6 +100,41 @@ const TaskList = () => {
     const handleVisibilityChange = () => {
         setConcludedTasksIsVisible(!concludedTasksIsVisible);
     };
+
+    const sortConcludedTask = (taskList) => {
+        let ordenatedTasks = [... taskList];
+
+        ordenatedTasks = ordenatedTasks.sort((task1, task2) => {
+            return task1.concluded - task2.concluded;
+        });
+
+        return ordenatedTasks;
+    };
+
+    const filterConcludedTasks = (taskList) => {
+        let filteredTasks = [... taskList];
+
+        if (!concludedTasksIsVisible) {
+            filteredTasks = filteredTasks.filter((task) => {
+                return !task.concluded;
+            });
+        }
+
+        return filteredTasks;
+    };
+
+    const prepareDisplayTaskList = () => {
+        let taskList = [... tasks];
+
+        taskList = sortConcludedTask(taskList);
+        taskList = filterConcludedTasks(taskList);
+
+        setDisplayTasks(taskList);
+    }
+
+    useMemo(prepareDisplayTaskList, []);
+    useMemo(prepareDisplayTaskList, [tasks]);
+    useMemo(prepareDisplayTaskList, [concludedTasksIsVisible]);
 
     return (
         <StyledSafeAreaView>
@@ -123,8 +160,8 @@ const TaskList = () => {
             </StyeldImage>
 
             <FlatList 
-                data={tasks}
-                extraData={tasks}
+                data={displayTasks}
+                extraData={displayTasks}
                 keyExtractor={task => task.id}
                 renderItem={({item: task}) => {
                     return createItemList(task);
