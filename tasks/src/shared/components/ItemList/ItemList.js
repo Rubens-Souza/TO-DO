@@ -74,7 +74,7 @@ const ItemList = ({
             >
 
             <StyledMainView>
-                <Checkbox onCheck={compleatTask} onUncheck={resetTask}/>
+                <Checkbox value={task.concluded} onCheck={compleatTask} onUncheck={resetTask}/>
 
                 <StyledTextView>
                     <StyledTaskTitle isCompleated={task.concluded}>
