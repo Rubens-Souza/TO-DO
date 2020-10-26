@@ -12,8 +12,8 @@ import {
     StyledTaskTitle 
 } from "./styles";
 
-import { formatDate } from "../../../shared/utils/functions/DateUtils";
-import { EmptyString, isStringBlank } from "../../../shared/utils/functions/StringUtils";
+import { formatStringDate } from "../../../shared/utils/functions/DateUtils";
+import { EmptyString, getDefaultIfBlank, isStringBlank } from "../../../shared/utils/functions/StringUtils";
 import { hasSetFunctionProperty } from "../../../shared/utils/functions/ComponentsUtils";
 import ExclusionButtonDirections from "../../../shared/utils/constants/ExclusionButtonDirections";
 
@@ -29,11 +29,7 @@ const ItemList = ({
     const task = taskData;
 
     const getDateString = (date) => {
-        if (!(date instanceof Date)) {
-            return EmptyString;
-        }
-
-        return formatDate(date);
+        return getDefaultIfBlank(formatStringDate(date), EmptyString);
     };
 
     const compleatTask = () => {

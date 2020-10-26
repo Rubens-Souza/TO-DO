@@ -17,7 +17,18 @@ export const getActualFormattedDate = () => {
 };
 
 export const formatDate = (date) => {
-    if (!(date instanceof Date)) {
+    if (!isDateValid(date)) {
+        return undefined;
+    }
+
+    return moment(date).locale(DateLocale).format(DateFormat);
+};
+
+export const formatStringDate = (stringDate) => {
+    const date = new Date(stringDate);
+    const canBeConverted = !isNaN(date.valueOf());
+    
+    if (!canBeConverted) {
         return undefined;
     }
 
