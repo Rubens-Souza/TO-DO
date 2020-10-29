@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { TouchableOpacity, View, Platform } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
@@ -20,10 +21,10 @@ const InitialState = {
 };
 
 const DateTimeInput = ({
-    onChange=null, 
-    onCalendarOpen=null,
-    mode=DateTimePickerModes.dateAndTime,
-    placeholder=EmptyString,
+    onChange, 
+    onCalendarOpen,
+    mode,
+    placeholder,
 }) => {
 
     const [date, setDate] = useState(InitialState.initialDate);
@@ -78,6 +79,20 @@ const DateTimeInput = ({
     };
 
     return getDateTimePicker();
+};
+
+DateTimeInput.propTypes = {
+    onChange: PropTypes.func, 
+    onCalendarOpen: PropTypes.func,
+    mode: PropTypes.string,
+    placeholder: PropTypes.string,
+};
+
+DateTimeInput.defaultProps = {
+    onChange: null, 
+    onCalendarOpen: null,
+    mode: DateTimePickerModes.dateAndTime,
+    placeholder: EmptyString,
 };
 
 export default DateTimeInput;

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 
 import { hasSetFunctionProperty } from "../../utils/functions/ComponentsUtils";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -12,7 +13,9 @@ import {
 } from "./styles";
 
 const Checkbox = ({
-    value=false, onCheck=null, onUncheck=null
+    value, 
+    onCheck, 
+    onUncheck,
 }) => {
 
     const [checked, setChecked] = useState(value);
@@ -48,6 +51,18 @@ const Checkbox = ({
     };
 
     return getCheckbox();
+};
+
+Checkbox.propTypes = {
+    value: PropTypes.bool, 
+    onCheck: PropTypes.func, 
+    onUncheck: PropTypes.func,
+};
+
+Checkbox.defaultProps = {
+    value: false, 
+    onCheck: null, 
+    onUncheck: null,
 };
 
 export default Checkbox;

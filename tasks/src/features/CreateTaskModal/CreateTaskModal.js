@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 
 import Modal from "../../shared/components/Modal/Modal";
 import DateTimeInput from "../../shared/components/DateTimeInput/DateTimeInput";
@@ -25,10 +26,10 @@ const IntialState = {
 };
 
 const CreateTaskModal = ({
-    isOpen=true, 
-    onClose=null, 
-    onSave=null,
-    themeColor=Colors.darkRed
+    isOpen, 
+    onClose, 
+    onSave,
+    themeColor,
 }) => {
 
     const [taskName, setTaskName] = useState(IntialState.taskName);
@@ -89,6 +90,20 @@ const CreateTaskModal = ({
                 </StyledButtonsView>
         </Modal>
     );
+};
+
+CreateTaskModal.propTypes = {
+    isOpen: PropTypes.bool.isRequired, 
+    onClose: PropTypes.func, 
+    onSave: PropTypes.func,
+    themeColor: PropTypes.string,
+};
+
+CreateTaskModal.defaultProps = {
+    isOpen: true, 
+    onClose: null, 
+    onSave: null,
+    themeColor: Colors.darkRed,
 };
 
 export default CreateTaskModal;

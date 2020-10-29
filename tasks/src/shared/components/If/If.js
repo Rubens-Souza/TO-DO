@@ -1,5 +1,8 @@
+import PropTypes from "prop-types";
+
 const If = ({
-    isTrue=true, children
+    isTrue, 
+    children
 }) => {
 
     if (isTrue) {
@@ -7,6 +10,10 @@ const If = ({
     }
 
     return null;
+};
+
+If.propTypes = {
+    isTrue: PropTypes.bool.isRequired,
 };
 
 export default If;

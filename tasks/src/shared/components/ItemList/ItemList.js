@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import If from "../If/If";
 import Checkbox from "../Checkbox/Checkbox";
@@ -20,10 +21,10 @@ import ExclusionButtonDirections from "../../../shared/utils/constants/Exclusion
 import Task from "../../dtos/Task";
 
 const ItemList = ({
-    taskData=Task.EmptyTask,
-    onTaskConclusion=null,
-    onTaskReseted=null,
-    onExclusion=null
+    taskData,
+    onTaskConclusion,
+    onTaskReseted,
+    onExclusion,
 }) => {
 
     const task = taskData;
@@ -92,6 +93,20 @@ const ItemList = ({
             </StyledMainView>
         </Swipeable>
     );
+};
+
+ItemList.propTypes = {
+    taskData: PropTypes.object.isRequired,
+    onTaskConclusion: PropTypes.func,
+    onTaskReseted: PropTypes.func,
+    onExclusion: PropTypes.func,
+};
+
+ItemList.defaultProps = {
+    taskData: Task.EmptyTask,
+    onTaskConclusion: null,
+    onTaskReseted: null,
+    onExclusion: null
 };
 
 export default ItemList;

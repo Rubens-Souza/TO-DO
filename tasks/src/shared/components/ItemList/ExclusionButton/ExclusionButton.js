@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -12,8 +13,8 @@ import Colors from "../../../utils/constants/Colors";
 import ExclusionButtonDirections from "../../../utils/constants/ExclusionButtonDirections";
 
 const ExclusionButton = ({
-    onPress=null,
-    direction=ExclusionButtonDirections.vertical
+    onPress,
+    direction,
 }) => {
     return (
         <StyledButton onPress={onPress} direction={direction}>
@@ -23,6 +24,16 @@ const ExclusionButton = ({
             </StyledButtonText>
         </StyledButton>
     );
+};
+
+ExclusionButton.propTypes = {
+    onPress: PropTypes.func,
+    direction: PropTypes.string,
+};
+
+ExclusionButton.defaultProps = {
+    onPress: null,
+    direction: ExclusionButtonDirections.vertical,
 };
 
 export default ExclusionButton;
